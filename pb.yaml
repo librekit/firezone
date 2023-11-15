@@ -16,11 +16,16 @@
           - software-properties-common
         state: present
 
+    - name: Add Firezone GPG key
+      ansible.builtin.apt_key:
+        url: https://apt.firezone.dev/gpg.key
+        state: present
+
     - name: Add Firezone repository
-      shell: |
-        curl -fsSL https://apt.firezone.dev/gpg.key | gpg --dearmor -o /usr/share/keyrings/firezone-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/firezone-archive-keyring.gpg] https://apt.firezone.dev/ubuntu focal main" | tee /etc/apt/sources.list.d/firezone.list > /dev/null
-        apt-get update
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64] https://apt.firezone.dev/ubuntu focal main"
+        state: present
+        update_cache: yes
 
     - name: Install Firezone
       apt:
