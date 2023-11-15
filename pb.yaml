@@ -38,7 +38,7 @@
 
     - name: Run Firezone installation script with expect for interactive prompts
       expect:
-        command: bash <(curl -Ls https://raw.githubusercontent.com/firezone/firezone/legacy/scripts/install.sh)
+        command: bash < /tmp/install_firezone.sh
         responses:
           "Enter the administrator email you'd like to use for logging into this Firezone instance:": "admin@example.com"
           "Enter the desired installation directory": "/opt/firezone"
