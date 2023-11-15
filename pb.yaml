@@ -40,9 +40,9 @@
       expect:
         command: bash /tmp/install_firezone.sh
         responses:
-          "(?i).*email.*:": "admin@example.com"
+          "(?i).*email.*:": "hemen@doprax.com"
           "(?i).*directory.*:": "\n"
-          "(?i).*URL.*:": "https://firezone.example.com"
+          "(?i).*URL.*:": "https://firezone1.librekit.com"
           "(?i).*feedback.*\\(Y/n\\):": "Y\n"
           "(?i).*logs.*\\(N/y\\):": "N\n"
           "(?i).*install.*:": "\n"
