@@ -1,0 +1,42 @@
+---
+- name: Install Firezone
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update system packages
+      apt:
+        update_cache: yes
+
+    - name: Install necessary dependencies
+      apt:
+        name:
+          - curl
+          - gnupg2
+          - software-properties-common
+        state: present
+
+    - name: Add Firezone repository
+      shell: |
+        curl -fsSL https://apt.firezone.dev/gpg.key | gpg --dearmor -o /usr/share/keyrings/firezone-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/firezone-archive-keyring.gpg] https://apt.firezone.dev/ubuntu focal main" | tee /etc/apt/sources.list.d/firezone.list > /dev/null
+        apt-get update
+
+    - name: Install Firezone
+      apt:
+        name: firezone
+        state: latest
+
+    - name: Start Firezone service
+      systemd:
+        name: firezone
+        enabled: yes
+        state: started
+
+    - name: Check Firezone status
+      command: systemctl status firezone
+      register: firezone_status
+
+    - name: Output Firezone status
+      debug:
+        var: firezone_status.stdout_lines
