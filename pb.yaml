@@ -4,44 +4,12 @@
   become: yes
 
   tasks:
-    - name: Update system packages
-      apt:
-        update_cache: yes
-
-    - name: Install necessary dependencies
-      apt:
-        name:
-          - curl
-          - gnupg2
-          - software-properties-common
-        state: present
-
-    - name: Add Firezone GPG key
-      ansible.builtin.apt_key:
-        url: https://apt.firezone.dev/gpg.key
-        state: present
-
-    - name: Add Firezone repository
-      ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64] https://apt.firezone.dev/ubuntu focal main"
-        state: present
-        update_cache: yes
+    - name: Add the WireGuard module
+      command: modprobe wireguard
 
     - name: Install Firezone
-      apt:
-        name: firezone
-        state: latest
+      shell: bash <(curl -Ls https://github.com/firezone/firezone/raw/master/scripts/install.sh)
+      args:
+        creates: /usr/local/bin/firezone-ctl
 
-    - name: Start Firezone service
-      systemd:
-        name: firezone
-        enabled: yes
-        state: started
-
-    - name: Check Firezone status
-      command: systemctl status firezone
-      register: firezone_status
-
-    - name: Output Firezone status
-      debug:
-        var: firezone_status.stdout_lines
+   
