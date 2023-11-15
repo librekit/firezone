@@ -36,17 +36,18 @@
         dest: /tmp/install_firezone.sh
         mode: '0755'
 
-    - name: Run Firezone installation script with expect for interactive prompts
+    - name: Run the Firezone installation script with expect for interactive prompts
       expect:
-        command: "sh -c /tmp/install_firezone.sh"
+        command: bash /tmp/install_firezone.sh
         responses:
-          "(?i).*administrator email.*:": "admin@example.com"
-          "(?i).*installation directory.*:": "\n"
-          "(?i).*external URL.*:": "https://firezone1.librekit.com"
-          "(?i).*product feedback.*\\(Y/n\\):": "Y"
-          "(?i).*crash and performance logs.*\\(N/y\\):": "N"
-          "(?i).*Press <ENTER> to install.*:": "\n"
-      timeout: 600  # Adjust the timeout as needed
+          "(?i).*email.*:": "admin@example.com"
+          "(?i).*directory.*:": "\n"
+          "(?i).*URL.*:": "https://firezone.example.com"
+          "(?i).*feedback.*\\(Y/n\\):": "Y\n"
+          "(?i).*logs.*\\(N/y\\):": "N\n"
+          "(?i).*install.*:": "\n"
+        echo: yes
+        timeout: 600
       register: script_output
       changed_when: false
       ignore_errors: yes
