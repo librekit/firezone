@@ -40,12 +40,12 @@
       expect:
         command: bash /tmp/install_firezone.sh
         responses:
-          "(?i)Enter the administrator email.*:": "admin@example.com"
-          "(?i)Enter the desired installation directory.*:": "\n"
-          "(?i)Enter the external URL.*:": "https://firezone.example.com"
-          "(?i)Could we email you.*\\(Y/n\\):": "Y"
-          "(?i)Firezone collects crash.*\\(N/y\\):": "N"
-          "(?i)Press <ENTER> to install.*:": "\n"
+          "(?i).*administrator email.*:": "admin@example.com"
+          "(?i).*installation directory.*:": "\n"
+          "(?i).*external URL.*:": "https://firezone1.librekit.com"
+          "(?i).*product feedback.*\\(Y/n\\):": "Y"
+          "(?i).*crash and performance logs.*\\(N/y\\):": "N"
+          "(?i).*Press <ENTER> to install.*:": "\n"
       timeout: 600  # Adjust the timeout as needed
 
     - name: Configure Firezone
