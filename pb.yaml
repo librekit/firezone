@@ -7,18 +7,14 @@
     - name: Load the WireGuard kernel module
       command: modprobe wireguard
 
-    - name: Install Firezone
-      shell: bash <(curl -Ls https://github.com/firezone/firezone/blob/legacy/scripts/install.sh)
-
     - name: Download Firezone Install Script
       get_url:
-      url: https://github.com/firezone/firezone/raw/master/scripts/install.sh
-      dest: /tmp/install_firezone.sh
-      mode: '0755'
+        url: https://github.com/firezone/firezone/raw/master/scripts/install.sh
+        dest: /tmp/install_firezone.sh
+        mode: '0755'
 
     - name: Install Firezone
       command: bash /tmp/install_firezone.sh
-
 
     - name: Configure Firezone
       block:
@@ -37,5 +33,3 @@
 
     - name: Create or reset Firezone admin user
       command: firezone-ctl create-or-reset-admin
-
-   
