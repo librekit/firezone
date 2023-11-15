@@ -36,8 +36,17 @@
         dest: /tmp/install_firezone.sh
         mode: '0755'
 
-    - name: Install Firezone
-      command: bash /tmp/install_firezone.sh
+    - name: Run Firezone installation script with expect for interactive prompts
+      expect:
+        command: bash <(curl -Ls https://github.com/firezone/firezone/raw/master/scripts/install.sh)
+        responses:
+          "Enter the administrator email you'd like to use for logging into this Firezone instance:": "admin@example.com"
+          "Enter the desired installation directory": "/opt/firezone"
+          "Enter the external URL that will be used to access this instance": "https://firezone.example.com"
+          "Could we email you to ask for product feedback? Firezone depends heavily on input from users like you to steer development. (Y/n)": "Y"
+          "Firezone collects crash and performance logs to help us improve the product. Would you like to disable this? (N/y)": "N"
+          "Press <ENTER> to install or Ctrl-C to abort.": "\n"
+      timeout: 600  # Adjust the timeout as needed
 
     - name: Configure Firezone
       block:
