@@ -38,7 +38,7 @@
 
     - name: Run Firezone installation script with expect for interactive prompts
       expect:
-        command: bash /tmp/install_firezone.sh
+        command: "sh -c /tmp/install_firezone.sh"
         responses:
           "(?i).*administrator email.*:": "admin@example.com"
           "(?i).*installation directory.*:": "\n"
