@@ -1,15 +1,31 @@
 ---
-- name: Install Firezone
+- name: Install and Configure Firezone for WireGuard VPN
   hosts: all
   become: yes
 
   tasks:
-    - name: Add the WireGuard module
+    - name: Load the WireGuard kernel module
       command: modprobe wireguard
 
     - name: Install Firezone
-      shell: bash <(curl -Ls https://github.com/firezone/firezone/raw/master/scripts/install.sh)
-      args:
-        creates: /usr/local/bin/firezone-ctl
+      shell: bash <(curl -Ls https://github.com/firezone/firezone/blob/legacy/scripts/install.sh)
+
+    - name: Configure Firezone
+      block:
+        - name: Set external URL and SSL certificate path in Firezone configuration
+          lineinfile:
+            path: /etc/firezone/firezone.rb
+            regexp: '{{ item.regexp }}'
+            line: '{{ item.line }}'
+          loop:
+            - { regexp: "^# default\\['firezone'\\]\\['external_url'\\] = ''", line: "default['firezone']['external_url'] = 'https://yourdomain.com'" }
+            - { regexp: "^default\\['firezone'\\]\\['ssl'\\]\\['certificate'\\] = nil", line: "default['firezone']['ssl']['certificate'] = '/etc/letsencrypt/live/yourdomain.com/fullchain.pem'" }
+            - { regexp: "^default\\['firezone'\\]\\['ssl'\\]\\['certificate_key'\\] = nil", line: "default['firezone']['ssl']['certificate_key'] = '/etc/letsencrypt/live/yourdomain.com/privkey.pem'" }
+
+    - name: Reconfigure Firezone
+      command: firezone-ctl reconfigure
+
+    - name: Create or reset Firezone admin user
+      command: firezone-ctl create-or-reset-admin
 
    
