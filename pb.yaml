@@ -47,7 +47,7 @@
           "(?i).*logs.*\\(N/y\\):": "N\n"
           "(?i).*install.*:": "\n"
         echo: yes
-        timeout: 600
+        timeout: 120
       register: script_output
       changed_when: false
       ignore_errors: yes
