@@ -9,7 +9,7 @@
 
     - name: Download Firezone Install Script
       get_url:
-        url: https://github.com/firezone/firezone/blob/legacy/scripts/install.sh
+        url: https://raw.githubusercontent.com/firezone/firezone/legacy/scripts/install.sh
         dest: /tmp/install_firezone.sh
         mode: '0755'
 
