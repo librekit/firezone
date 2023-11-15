@@ -47,7 +47,14 @@
           "(?i).*crash and performance logs.*\\(N/y\\):": "N"
           "(?i).*Press <ENTER> to install.*:": "\n"
       timeout: 600  # Adjust the timeout as needed
-
+      register: script_output
+      changed_when: false
+      ignore_errors: yes
+      
+    - name: Debug script output
+      debug:
+        var: script_output.stdout_lines
+        
     - name: Configure Firezone
       block:
         - name: Set external URL and SSL certificate path in Firezone configuration
