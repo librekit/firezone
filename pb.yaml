@@ -4,6 +4,12 @@
   become: yes
 
   tasks:
+      - name: Install Docker
+      apt:
+        name: docker.io
+        state: latest
+      when: ansible_facts['os_family'] == "Debian"
+      
     - name: Load the WireGuard kernel module
       command: modprobe wireguard
 
