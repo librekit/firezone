@@ -4,14 +4,31 @@
   become: yes
 
   tasks:
-    - name: Install Docker
+    - name: Install prerequisites for Docker
       apt:
-        name: docker.io
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+        update_cache: yes
+
+    - name: Add Docker’s official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        state: present
+
+    - name: Install Docker Engine
+      apt:
+        name: docker-ce
+        update_cache: yes
         state: latest
-      when: ansible_facts['os_family'] == "Debian"
-      
-    - name: Load the WireGuard kernel module
-      command: modprobe wireguard
 
     - name: Download Firezone Install Script
       get_url:
