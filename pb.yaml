@@ -36,6 +36,13 @@
         dest: /tmp/install_firezone.sh
         mode: '0755'
 
+    - name: Comment out the Enter key prompt in the installation script
+      lineinfile:
+        path: /tmp/install_firezone.sh
+        regexp: 'read -p "Press <ENTER> to install or Ctrl-C to abort."'
+        line: '# read -p "Press <ENTER> to install or Ctrl-C to abort."'
+        backrefs: yes
+
     - name: Run the Firezone installation script with expect for interactive prompts
       expect:
         command: bash /tmp/install_firezone.sh
