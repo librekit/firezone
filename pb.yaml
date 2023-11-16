@@ -56,20 +56,4 @@
       debug:
         var: script_output.stdout_lines
         
-    - name: Configure Firezone
-      block:
-        - name: Set external URL and SSL certificate path in Firezone configuration
-          lineinfile:
-            path: /etc/firezone/firezone.rb
-            regexp: '{{ item.regexp }}'
-            line: '{{ item.line }}'
-          loop:
-            - { regexp: "^# default\\['firezone'\\]\\['external_url'\\] = ''", line: "default['firezone']['external_url'] = 'https://firezone1.librekit.com'" }
-            - { regexp: "^default\\['firezone'\\]\\['ssl'\\]\\['certificate'\\] = nil", line: "default['firezone']['ssl']['certificate'] = '/etc/letsencrypt/live/firezone1.librekit.com/fullchain.pem'" }
-            - { regexp: "^default\\['firezone'\\]\\['ssl'\\]\\['certificate_key'\\] = nil", line: "default['firezone']['ssl']['certificate_key'] = '/etc/letsencrypt/live/firezone1.librekit.com/privkey.pem'" }
 
-    - name: Reconfigure Firezone
-      command: firezone-ctl reconfigure
-
-    - name: Create or reset Firezone admin user
-      command: firezone-ctl create-or-reset-admin
