@@ -45,7 +45,7 @@
           "(?i).*URL.*:": "https://firezone1.librekit.com"
           "(?i).*feedback.*\\(Y/n\\):": "Y\n"
           "(?i).*logs.*\\(N/y\\):": "N\n"
-          "(?i).*install.*:": "\n"
+          "(?i).*install.*:": "yy \n"
         echo: yes
         timeout: 120
       register: script_output
