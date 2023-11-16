@@ -3,6 +3,13 @@
   hosts: all
   become: yes
 
+  vars:
+    admin_email: "{{ user_admin_email | default('default@admin.com') }}"
+    external_url: "{{ user_external_url | default('https://default.example.com') }}"
+
+
+
+
   tasks:
     - name: Install prerequisites for Docker
       apt:
@@ -47,9 +54,9 @@
       expect:
         command: bash /tmp/install_firezone.sh
         responses:
-          "(?i).*email.*:": "hemen@doprax.com"
+          "(?i).*email.*:": "{{ admin_email }}"
           "(?i).*directory.*:": "\n"
-          "(?i).*URL.*:": "https://firezone1.librekit.com"
+          "(?i).*URL.*:": "{{ external_url }}"
           "(?i).*feedback.*\\(Y/n\\):": "Y\n"
           "(?i).*logs.*\\(N/y\\):": "N\n"
 
