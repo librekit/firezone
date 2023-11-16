@@ -4,8 +4,8 @@
   become: yes
 
   vars:
-    admin_email: "{{ user_admin_email | default('default@admin.com') }}"
-    external_url: "{{ user_external_url | default('https://default.example.com') }}"
+    admin_email: "{{ admin_email | default('default@admin.com') }}"
+    external_url: "{{ external_url | default('https://default.example.com') }}"
 
 
 
