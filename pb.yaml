@@ -61,7 +61,7 @@
           "(?i).*logs.*\\(N/y\\):": "N\n"
 
         echo: yes
-        timeout: 120
+        timeout: 300
       register: script_output
       changed_when: false
       ignore_errors: yes
