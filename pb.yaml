@@ -5,7 +5,7 @@
 
   vars:
     admin_email: "{{ admin_email | default('default@admin.com') }}"
-    external_url: "{{ external_url | default('https://default.example.com') }}"
+    external_url: "https://{{ external_url }}"
 
 
 
