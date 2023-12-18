@@ -69,8 +69,8 @@
     - name: Save script output to a file
       copy:
         content: "{{ script_output.stdout | default('') }}"
-        dest: "/tmp/firezone_install_log.log"
+        dest: "/tmp/firezone_install_log1.log"
 
     - name: Display last 10 lines of output file
-      command: "tail -n 10 /tmp/firezone_install_log.log"
+      command: "tail -n 10 /tmp/firezone_install_log1.log"
 
