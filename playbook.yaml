@@ -66,7 +66,12 @@
       changed_when: false
       ignore_errors: yes
       
-    - name: Debug last 10 lines of script output
-      debug:
-        var: script_output.stdout_lines | length > 10 - 1 and script_output.stdout_lines[-10:] or script_output.stdout_lines
+    - name: Save script output to a file
+      copy:
+        content: "{{ script_output.stdout | default('') }}"
+        dest: "/tmp/firezone_install_log.log"
+
+    - name: Display last 10 lines of output file
+      command: "tail -n 10 /tmp/firezone_install_log.log"
+      when: script_output.rc == 0  # Only execute if the script ran successfully
 
