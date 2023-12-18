@@ -73,5 +73,4 @@
 
     - name: Display last 10 lines of output file
       command: "tail -n 10 /tmp/firezone_install_log.log"
-      when: script_output.rc == 0  # Only execute if the script ran successfully
 
