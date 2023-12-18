@@ -66,8 +66,8 @@
       changed_when: false
       ignore_errors: yes
       
-    - name: Debug script output
+    - name: Debug last 10 lines of script output
       debug:
-        var: script_output.stdout_lines
+        var: script_output.stdout_lines | tail(10)
         
 
