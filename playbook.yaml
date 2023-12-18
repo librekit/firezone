@@ -68,6 +68,5 @@
       
     - name: Debug last 10 lines of script output
       debug:
-        var: script_output.stdout_lines | tail(10)
-        
+        var: script_output.stdout_lines | length > 10 - 1 and script_output.stdout_lines[-10:] or script_output.stdout_lines
 
