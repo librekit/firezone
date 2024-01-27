@@ -56,7 +56,7 @@
         responses:
           "(?i).*email.*:": "{{ admin_email }}"
           "(?i).*directory.*:": "\n"
-          "(?i).*URL.*:": "{{ external_url }}"
+          "(?i).*URL.*:": "https://{{ external_url }}"
           "(?i).*feedback.*\\(Y/n\\):": "Y\n"
           "(?i).*logs.*\\(N/y\\):": "N\n"
 
